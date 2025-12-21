@@ -8,12 +8,12 @@ private String pinCode;
 private String city;
 private String state;
 private String Country;
-private String roadName;
+
 private String houseName;
 
 
 // constructor for valuse;
-public Address(String Country,String state , String city, String street,String houseName,String roadName,String pinCode) throws IllegalArgumentException
+public Address(String Country,String state , String city, String street,String houseName,String pinCode) throws IllegalArgumentException
 {
 if(pinCode.length()!=6|| !pinCode.matches("\\d{6}"))
 {
@@ -25,7 +25,7 @@ if(pinCode.length()!=6|| !pinCode.matches("\\d{6}"))
      this.city = city;
      this.street = street;
      this.houseName = houseName;
-     this.roadName = roadName;
+     
      this.pinCode = pinCode;
 
 
@@ -82,10 +82,7 @@ public void setHouseName(String houseName)
     this.houseName = houseName;
 }
 
-public void setRoadName(String roadName)
-{
-    this.roadName = roadName;
-}
+
 public String getCity()
 {
     return this.city;
@@ -110,12 +107,6 @@ public String getHouseName()
 {
     return this.houseName;
 }
-public String getRoadName()
-{
-    return this.roadName;
-}
-
-
 
 
 
