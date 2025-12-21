@@ -108,6 +108,17 @@ public String getHouseName()
     return this.houseName;
 }
 
+public String toString()
+{
+
+return this.houseName+" "+this.street+" "+this.city+" "+this.state+" "+this.Country+" - "+this.pinCode;
+
+
+
+
+
+}
+
 
 
 
