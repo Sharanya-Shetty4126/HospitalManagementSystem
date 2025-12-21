@@ -16,9 +16,10 @@ private String phoneNumber;
 private String emailId;
 
 
-private LocalDate dateOfBirth;
+final private LocalDate dateOfBirth;
 
 private String bloodGroup;
+public List<MedicalHistory> medicalHistory ;
 
 public Patient(String name,int id,String gender,String phoneNumber,String emailId,LocalDate date,String bloodGroup,Address address)throws IllegalArgumentException
 {
@@ -49,7 +50,7 @@ if(!emailId.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$"))
     this.bloodGroup = bloodGroup;
    /*doubt */ this.address =  address;
 
-
+this.medicalHistory = new ArrayList<MedicalHistory>();
 
 
 
@@ -95,6 +96,28 @@ public void setId(int id) throws IllegalArgumentException
 
 
 }
+public void addMedicalHistory(MedicalHistory history)
+{
+    if(history== null)
+    {
+        throw new IllegalArgumentException("Medical History cannot be empty");
+
+    }
+    this.medicalHistory.add(history);
+}
+
+
+
+public List<String> getMedicalHistory() {
+    List<String> history = new ArrayList<>();
+    for(MedicalHistory mh : this.medicalHistory) {
+        history.add(mh.toString());
+    }
+    return history;
+}
+
+
+
 
 public int getId()
 {
@@ -168,7 +191,68 @@ public Address getAddress()
 
     return this.address;
 
+
+
 }
+
+
+public void updateEmailId(String emailId)
+{
+if(!emailId.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$"))
+{
+    throw new IllegalArgumentException("Invalid Email ID");
+}
+this.emailId = emailId;
+
+
+
+}
+public void updateContactInfo(String phoneNumber,String emailId)
+{
+     if(phoneNumber.length()!=10||!phoneNumber.matches("\\d{10}"))
+    {
+        throw new IllegalArgumentException("Invalid Phone Number");
+    }
+if(!emailId.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$"))
+{
+    throw new IllegalArgumentException("Invalid Email ID");
+}
+this.phoneNumber = phoneNumber;
+this.emailId = emailId;
+
+
+
+
+}
+
+@Override
+public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("Patient ID: ").append(id)
+      .append("\nName: ").append(name)
+      .append("\nGender: ").append(gender)
+      .append("\nDate of Birth: ").append(dateOfBirth)
+      .append("\nAge: ").append(getAge())
+      .append("\nBlood Group: ").append(bloodGroup)
+      .append("\nPhone: ").append(phoneNumber)
+      .append("\nEmail: ").append(emailId)
+      .append("\nAddress: ").append(address)
+      .append("\nMedical History:\n");
+
+    if (medicalHistory.isEmpty()) {
+        sb.append("No records\n");
+    } else {
+        for (MedicalHistory mh : medicalHistory) {
+            sb.append(mh).append("\n");
+        }
+    }
+
+    return sb.toString();
+}
+
+
+
+
 
 
 
