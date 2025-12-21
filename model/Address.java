@@ -38,7 +38,7 @@ this.Country = "Country Name";
      this.city = "City Name";
      this.street = "Street Name";
      this.houseName = "House Name";
-     this.roadName = "Road Name";
+     
      this.pinCode = "Pin Code";
 
 
