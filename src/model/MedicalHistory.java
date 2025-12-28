@@ -12,13 +12,15 @@ import java.time.LocalTime;
 
 public class MedicalHistory {
     
+    private int patient_id;
+    private int history_id;
 
 private String description;
 private LocalDate recordDate;
 private String category;
 private String status;
 
-public MedicalHistory(String description , LocalDate recordDate,String category,String status) throws IllegalArgumentException
+public MedicalHistory(int hist_id,int pat_id,String description , LocalDate recordDate,String category,String status) throws IllegalArgumentException
 {
     if(description==null||description.trim().isEmpty())
     {
@@ -40,6 +42,9 @@ if(status==null||status.trim().isEmpty())
 {
     throw new IllegalArgumentException("Invalid Status");
 }
+
+this.history_id=hist_id;
+this.patient_id = pat_id;
 
 this.description = description;
 this.recordDate = recordDate;

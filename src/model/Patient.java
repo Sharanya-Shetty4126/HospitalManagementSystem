@@ -3,6 +3,7 @@ import java.util.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Period;
+import model.MedicalHistory;
 
 public class Patient{
 
@@ -11,7 +12,7 @@ private int id;
 
 private String gender;
 
-private Address address;
+private int addressID;
 private String phoneNumber;
 private String emailId;
 
@@ -21,7 +22,7 @@ final private LocalDate dateOfBirth;
 private String bloodGroup;
 public List<MedicalHistory> medicalHistory ;
 
-public Patient(String name,int id,String gender,String phoneNumber,String emailId,LocalDate date,String bloodGroup,Address address)throws IllegalArgumentException
+public Patient(String name,int id,String gender,String phoneNumber,String emailId,LocalDate date,String bloodGroup,int addressID)throws IllegalArgumentException
 {
 
    if (date == null || date.isAfter(LocalDate.now())) {
@@ -39,6 +40,10 @@ if(!emailId.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$"))
 {
     throw new IllegalArgumentException("Invalid Email ID");
 }
+if(addressID<=0)
+{
+    throw new IllegalArgumentException("Invalid Address ID");
+}
 
     this.name = name;
     this.id = id;
@@ -48,7 +53,7 @@ if(!emailId.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$"))
     this.emailId = emailId;
     this.dateOfBirth = date ;
     this.bloodGroup = bloodGroup;
-   /*doubt */ this.address =  address;
+   /*doubt */ this.addressID =  addressID;
 
 this.medicalHistory = new ArrayList<MedicalHistory>();
 
@@ -182,16 +187,23 @@ public LocalDate getDateOfBirth()
 }
 
 
-public void updateAddress(Address newAddress) {
-    if(newAddress == null) throw new IllegalArgumentException("Address cannot be null");
-    this.address = newAddress;
+public void updateAddressID(int addID) throws IllegalArgumentException {
+
+if(addID<=0)
+{
+    throw new IllegalArgumentException("Invalid Address ID");
 }
-public Address getAddress()
+
+this.addressID = addID;
+
+
+
+
+}
+public int getAddressID()
 {
 
-    return this.address;
-
-
+    return this.addressID;
 
 }
 
@@ -236,7 +248,7 @@ public String toString() {
       .append("\nBlood Group: ").append(bloodGroup)
       .append("\nPhone: ").append(phoneNumber)
       .append("\nEmail: ").append(emailId)
-      .append("\nAddress: ").append(address)
+      .append("\nAddress: ").append(addressID)
       .append("\nMedical History:\n");
 
     if (medicalHistory.isEmpty()) {
