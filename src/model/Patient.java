@@ -8,11 +8,12 @@ import model.MedicalHistory;
 public class Patient{
 
 private String name;
-private int id;
+// private int id;
 
+private int patientID;
 private String gender;
 
-private int addressID;
+private int addressID=-1;
 private String phoneNumber;
 private String emailId;
 
@@ -20,18 +21,20 @@ private String emailId;
 final private LocalDate dateOfBirth;
 
 private String bloodGroup;
-public List<MedicalHistory> medicalHistory ;
+// public List<MedicalHistory> medicalHistory ;
 
-public Patient(String name,int id,String gender,String phoneNumber,String emailId,LocalDate date,String bloodGroup,int addressID)throws IllegalArgumentException
+public Patient(String name,String gender,String phoneNumber,String emailId,LocalDate date,String bloodGroup,int addressID)throws IllegalArgumentException
 {
 
    if (date == null || date.isAfter(LocalDate.now())) {
     throw new IllegalArgumentException("Invalid Date of Birth");
 }
-    if(name==null|| !name.matches("^[a-zA-Z]+$"))
-    {
-        throw new IllegalArgumentException("Invalid Name");
-    }
+    // if(name==null|| !name.matches("^[a-zA-Z]+( [a-zA-Z]+)*$\r\n" + //
+    //             ""))
+    // {
+    //     throw new IllegalArgumentException("Invalid Name");
+    // }
+
 if(phoneNumber.length()!=10||!phoneNumber.matches("\\d{10}"))
 {
     throw new IllegalArgumentException("Invalid Phone Number");
@@ -40,13 +43,21 @@ if(!emailId.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$"))
 {
     throw new IllegalArgumentException("Invalid Email ID");
 }
-if(addressID<=0)
-{
-    throw new IllegalArgumentException("Invalid Address ID");
-}
+// if(addressID<=0)
+// {
+//     throw new IllegalArgumentException("Invalid Address ID");
+// }
+  if (!gender.equalsIgnoreCase("male") &&
+        !gender.equalsIgnoreCase("female") &&
+        !gender.equalsIgnoreCase("other")) {
+        throw new IllegalArgumentException("Invalid Gender");
+    }
+      if (!bloodGroup.matches("^(A|B|AB|O)[+-]$")) {
+        throw new IllegalArgumentException("Invalid Blood Group");
+    }
 
     this.name = name;
-    this.id = id;
+    
     
     this.gender = gender;
     this.phoneNumber = phoneNumber;
@@ -55,11 +66,35 @@ if(addressID<=0)
     this.bloodGroup = bloodGroup;
    /*doubt */ this.addressID =  addressID;
 
-this.medicalHistory = new ArrayList<MedicalHistory>();
+// this.medicalHistory = new ArrayList<MedicalHistory>();
 
 
 
 
+}
+public Patient(int patientID, String name, String gender, String phoneNumber, String emailId,
+               LocalDate dateOfBirth, String bloodGroup, int addressID) {
+    this.patientID = patientID;
+    this.name = name;
+    this.gender = gender;
+    this.phoneNumber = phoneNumber;
+    this.emailId = emailId;
+    this.dateOfBirth = dateOfBirth;
+    this.bloodGroup = bloodGroup;
+    this.addressID = addressID;
+    // this.medicalHistory = new ArrayList<>();
+}
+
+
+public void setPatientID(int id)
+{
+    this.patientID =id;
+
+
+}
+public int getPatientID()
+{
+    return this.patientID;
 }
 
 public int getAge()
@@ -83,57 +118,62 @@ public void setName(String name) throws IllegalArgumentException
 }
 
 
+
+public boolean hasAddress()
+{
+    return addressID !=-1;
+}
 public String getName()
 {
     return this.name;
 }
-public void setId(int id) throws IllegalArgumentException
-{
+// public void setId(int id) throws IllegalArgumentException
+// {
 
-   if(id<0)
-   {
-    throw new IllegalArgumentException("ID cannot be negative");
+//    if(id<0)
+//    {
+//     throw new IllegalArgumentException("ID cannot be negative");
 
-   }
+//    }
 
-   this.id = id;
+//    this.patientID =id;
 
 
 
-}
-public void addMedicalHistory(MedicalHistory history)
-{
-    if(history== null)
-    {
-        throw new IllegalArgumentException("Medical History cannot be empty");
+// }
+// public void addMedicalHistory(MedicalHistory history)
+// {
+//     if(history== null)
+//     {
+//         throw new IllegalArgumentException("Medical History cannot be empty");
 
+//     }
+//     this.medicalHistory.add(history);
+// }
+
+
+
+// public List<MedicalHistory> getMedicalHistory() {
+//     return this.medicalHistory;
+// }
+
+
+
+
+
+// public int getId()
+// {
+//     return this.i;
+// }
+public void setGender(String gender) {
+    if (!gender.equalsIgnoreCase("male") &&
+        !gender.equalsIgnoreCase("female") &&
+        !gender.equalsIgnoreCase("other")) {
+        throw new IllegalArgumentException("Invalid Gender");
     }
-    this.medicalHistory.add(history);
+    this.gender = gender;
 }
 
-
-
-public List<String> getMedicalHistory() {
-    List<String> history = new ArrayList<>();
-    for(MedicalHistory mh : this.medicalHistory) {
-        history.add(mh.toString());
-    }
-    return history;
-}
-
-
-
-
-public int getId()
-{
-    return this.id;
-}
-public void setGender(String gender)
-{
-this.gender = gender;
-
-
-}
 
 public String getGender()
 {
@@ -172,10 +212,13 @@ public String getEmail()
     return this.emailId;
 }
 
-public void setBloodGroup(String bloodGroup)
-{
+public void setBloodGroup(String bloodGroup) {
+    if (!bloodGroup.matches("^(A|B|AB|O)[+-]$")) {
+        throw new IllegalArgumentException("Invalid Blood Group");
+    }
     this.bloodGroup = bloodGroup;
 }
+
 public String getBloodGroup()
 {
     return this.bloodGroup;
@@ -187,7 +230,7 @@ public LocalDate getDateOfBirth()
 }
 
 
-public void updateAddressID(int addID) throws IllegalArgumentException {
+public void setAddressID(int addID) throws IllegalArgumentException {
 
 if(addID<=0)
 {
@@ -240,7 +283,7 @@ this.emailId = emailId;
 @Override
 public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("Patient ID: ").append(id)
+    sb.append("Patient ID: ").append(patientID)
       .append("\nName: ").append(name)
       .append("\nGender: ").append(gender)
       .append("\nDate of Birth: ").append(dateOfBirth)
@@ -248,16 +291,17 @@ public String toString() {
       .append("\nBlood Group: ").append(bloodGroup)
       .append("\nPhone: ").append(phoneNumber)
       .append("\nEmail: ").append(emailId)
-      .append("\nAddress: ").append(addressID)
-      .append("\nMedical History:\n");
+      .append("\nAddress: ").append(addressID);
 
-    if (medicalHistory.isEmpty()) {
-        sb.append("No records\n");
-    } else {
-        for (MedicalHistory mh : medicalHistory) {
-            sb.append(mh).append("\n");
-        }
-    }
+    // if (medicalHistory.isEmpty()) {
+    //     sb.append("No records\n");
+    // }
+    
+    // els
+    //     for (MedicalHistory mh : medicalHistory) {
+    //         sb.append(mh).append("\n");
+    //     }
+    // }
 
     return sb.toString();
 }

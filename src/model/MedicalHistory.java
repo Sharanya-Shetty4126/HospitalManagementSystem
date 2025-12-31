@@ -20,7 +20,7 @@ private LocalDate recordDate;
 private String category;
 private String status;
 
-public MedicalHistory(int hist_id,int pat_id,String description , LocalDate recordDate,String category,String status) throws IllegalArgumentException
+public MedicalHistory(int pat_id,String description , LocalDate recordDate,String category,String status) throws IllegalArgumentException
 {
     if(description==null||description.trim().isEmpty())
     {
@@ -43,7 +43,7 @@ if(status==null||status.trim().isEmpty())
     throw new IllegalArgumentException("Invalid Status");
 }
 
-this.history_id=hist_id;
+
 this.patient_id = pat_id;
 
 this.description = description;
@@ -119,8 +119,20 @@ public String getStatus()
 {
     return this.status;
 }
+public void setMedicalHistoryID(int id)throws Exception
+{
+    if(id<=0)throw new Exception("Invalid History id");
 
-
+    this.history_id = id;
+}
+public int getHistoryID()
+{
+    return this.history_id;
+}
+public int getPatientID()
+{
+    return this.patient_id;
+}
 @Override
 
 public String toString()
