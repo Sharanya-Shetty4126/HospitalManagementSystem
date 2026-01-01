@@ -2,6 +2,7 @@ package model;
 
 public class Address {
     
+private int addID;
 
 private String street;
 private String pinCode;
@@ -19,6 +20,27 @@ if(pinCode.length()!=6|| !pinCode.matches("\\d{6}"))
 {
     throw new IllegalArgumentException("Invalid Pin Code");
 }
+
+
+    this.Country = Country;
+     this.state = state;
+     this.city = city;
+     this.street = street;
+     this.houseName = houseName;
+     
+     this.pinCode = pinCode;
+
+
+}
+
+// constructor for valuse;
+public Address(int add_id,String Country,String state , String city, String street,String houseName,String pinCode) throws IllegalArgumentException
+{
+if(pinCode.length()!=6|| !pinCode.matches("\\d{6}"))
+{
+    throw new IllegalArgumentException("Invalid Pin Code");
+}
+this.addID =add_id;
 
     this.Country = Country;
      this.state = state;
@@ -44,6 +66,15 @@ this.Country = "Country Name";
 
 }
 
+public void setAddressID(int id)
+{
+    this.addID = id;
+
+}
+public int getAddressID()
+{
+    return this.addID;
+}
 
 public void setCity(String City)
 {
