@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
+
+
 public class MainApp {
 
     public static int viewPhone(Scanner sc,PatientDAO p) { String Name; String phone; System.out.print("Enter Name of the patient = "); Name = sc.nextLine(); System.out.print("Enter phone of patient = "); phone = sc.nextLine(); int patid = p.getPatientIDByNameAndPhone(Name,phone); return patid;}
@@ -206,8 +208,28 @@ break;
 
 
 }
-
 case 3:
+{
+    AddressDAO addao= new AddressDAO();
+Patient pat = fetchPatientByChoice(sc,pdao);
+if(pat==null)
+{
+    System.out.println("Patient Not Found!!");
+    break;
+}
+
+Address pat_address = addao.getAddressById(pat.getAddressID());
+
+System.out.println("Patient stay details are below = ");
+System.out.println(pat_address);
+
+
+
+
+    break;
+}
+
+case 4:
     {
 
 
@@ -242,12 +264,29 @@ sc.nextLine();
         break;
     }
 
-    case 4:
-        {
-break;
-        }
+  
         case 5:
             {
+                MedicalHistoryDAO mdao = new MedicalHistoryDAO();
+Patient pat = fetchPatientByChoice(sc,pdao);
+if(pat==null)
+{
+    System.out.println("Patient Not Found!!");
+    break;
+}
+List<MedicalHistory>records = mdao.getMedicalHistoryByPatientId(pat.getPatientID());
+
+if(records.isEmpty())
+{
+    System.out.println("No Medical History Records For this patient "+pat.getName());
+    break;
+}
+System.out.println("Medical records for the patient "+pat.getName()+" Are Listed Below");
+for(MedicalHistory m:records)
+{
+    System.out.println(m);
+}
+
                 break;
             }
             case 6:{

@@ -37,16 +37,15 @@ ps.setString(2,mh.getDescription());
 ps.setDate(3,java.sql.Date.valueOf(mh.getRecordDate()));
 ps.setString(4,mh.getCategory());
 ps.setString(5,mh.getStatus());
+int rows = ps.executeUpdate();
 
-ResultSet rs = ps.getGeneratedKeys();
-if (rs.next()) {
-    
-    mh.setMedicalHistoryID(rs.getInt(1));
-
-
+if (rows > 0) {
+    ResultSet rs = ps.getGeneratedKeys();
+    if (rs.next()) {
+        mh.setMedicalHistoryID(rs.getInt(1));
+    }
 }
 
-int rows = ps.executeUpdate();
 
 return rows>0;
 
@@ -62,6 +61,36 @@ return false;
 
 }
 
+public List<MedicalHistory> getMedicalHistoryByPatientId(int patientId) {
+    List<MedicalHistory> historyList = new ArrayList<>();
+
+    String sql = "SELECT * FROM MEDICAL_HISTORY WHERE PATIENT_ID = ?";
+
+    try (Connection conn = DBConnection.getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+
+        ps.setInt(1, patientId);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            MedicalHistory mh = new MedicalHistory(
+                rs.getInt("history_id"),
+                rs.getInt("patient_id"),
+                rs.getString("pat_description"),
+                rs.getDate("record_date").toLocalDate(),
+                rs.getString("category"),
+                rs.getString("dis_status")
+            );
+
+            historyList.add(mh);
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return historyList;
+}
 
 
 

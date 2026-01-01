@@ -52,7 +52,48 @@ this.category = category;
 this.status = status;
 
 
+
+
+
 }
+
+
+
+public MedicalHistory(int hist_id,int pat_id,String description , LocalDate recordDate,String category,String status) throws IllegalArgumentException
+{
+    if(description==null||description.trim().isEmpty())
+    {
+throw new IllegalArgumentException("Invalid Description");
+
+
+    }
+    if(recordDate==null|| recordDate.isAfter(LocalDate.now()))
+{
+    throw new IllegalArgumentException("Invalid Record Date");
+
+}
+if(category==null||category.trim().isEmpty())
+{
+    throw new IllegalArgumentException("Invalid Category");
+
+}
+if(status==null||status.trim().isEmpty())
+{
+    throw new IllegalArgumentException("Invalid Status");
+}
+
+this.history_id =hist_id;
+
+this.patient_id = pat_id;
+
+this.description = description;
+this.recordDate = recordDate;
+this.category = category;
+this.status = status;
+
+
+}
+
 
 public void setStatus(String status) throws IllegalArgumentException
 {

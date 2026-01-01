@@ -39,6 +39,37 @@ public int addAddress(Address address, Connection con) throws Exception {
     }
     return -1;
 }
+public Address getAddressById(int addId) {
+
+    Address address = null;
+    String sql = "SELECT * FROM ADDRESS WHERE ADDRESS_ID = ?";
+
+    try (Connection conn = DBConnection.getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+
+        ps.setInt(1, addId);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            address = new Address(
+                rs.getInt("address_id"),
+                rs.getString("country"),
+                rs.getString("state"),
+                rs.getString("city"),
+                rs.getString("street_name"),
+                rs.getString("house_name"),
+                rs.getString("pin_code")
+            );
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return address;
+}
+
+
 
 
     // ================= GET ALL ADDRESSES =================

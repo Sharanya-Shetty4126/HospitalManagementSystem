@@ -32,6 +32,26 @@ if(pinCode.length()!=6|| !pinCode.matches("\\d{6}"))
 
 
 }
+
+// constructor for valuse;
+public Address(int add_id,String Country,String state , String city, String street,String houseName,String pinCode) throws IllegalArgumentException
+{
+if(pinCode.length()!=6|| !pinCode.matches("\\d{6}"))
+{
+    throw new IllegalArgumentException("Invalid Pin Code");
+}
+this.addID =add_id;
+
+    this.Country = Country;
+     this.state = state;
+     this.city = city;
+     this.street = street;
+     this.houseName = houseName;
+     
+     this.pinCode = pinCode;
+
+
+}
 // constructor for no arg 
 public Address()
 {
